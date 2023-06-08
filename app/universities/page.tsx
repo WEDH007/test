@@ -3,11 +3,14 @@
 import { useState } from "react"
 import getAllUniversities from "@/lib/getAllUniversities"
 import Link from "next/link"
+import Pagination from "../components/Pagination"
 
 export default async function UniversitiesPage() {
     const [currentPage, setCurrentPage] = useState(1)
     const [postsPerPage, setpostsPerPage] = useState(10)
     const universitiesData: Promise<University[]> = getAllUniversities()
+
+
 
     const universities = await universitiesData
 
@@ -19,13 +22,17 @@ export default async function UniversitiesPage() {
         <section>
             {currentPosts.map(post => {
                 return (
-                        <p key={post.name}>
-                            <Link href={`${post.web_pages}`}>{post.name}</Link>
-                        </p>
+                    <p key={post.name}>
+                        <Link href={`${post.web_pages}`}>{post.name}</Link>
+                    </p>
                 )
             })}
+            <Pagination/>
         </section>
     )
 
     return content
 }
+
+
+
