@@ -10,7 +10,7 @@ interface University {
 }
 
 export default function UniversitiesPage() {
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(100);
   const [postsPerPage] = useState<number>(10);
   const [universities, setUniversities] = useState<University[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -26,10 +26,9 @@ export default function UniversitiesPage() {
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
-    setCurrentPage(1); // Reset to first page when searching
+    setCurrentPage(1);
   };
 
-  // Filter the posts based on the search term.
   const filteredPosts = universities.filter((post) =>
     post.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -43,22 +42,40 @@ export default function UniversitiesPage() {
   let startPage = 1;
   let endPage = 5;
 
-  if (totalPages <= 5) {
-    endPage = totalPages;
-  } else {
-    if (currentPage <= 3) {
-      endPage = 5;
-    } else if (currentPage + 2 >= totalPages) {
-      startPage = totalPages - 4;
-      endPage = totalPages;
-    } else {
-      startPage = currentPage - 2;
-      endPage = currentPage + 2;
-    }
-  }
+  // if (totalPages <= 5) {
+  //   endPage = totalPages;
+  //   console.log(totalPages);
+  // } else {
+  //   if (currentPage <= 3) {
+  //     endPage = 5;
+  //     console.log(currentPage);
+
+  //   } else if (currentPage + 2 >= totalPages) {
+  //     startPage = totalPages - 4;
+  //     endPage = totalPages;
+  //     console.log(currentPage);
+
+  //   } else {
+  //     startPage = currentPage - 2;
+  //     endPage = currentPage + 2;
+  //   }
+  // }
+
+  // let pageNumbers: number[] = [];
+  // for (let i = startPage; i <= endPage; i++) {
+  //   pageNumbers.push(i);
+  // }
 
   let pageNumbers: number[] = [];
-  for (let i = startPage; i <= endPage; i++) {
+  for (let i = currentPage - 2; i < currentPage; i++) {
+    if (i >= 1) {
+      pageNumbers.push(i);
+    }
+    console.log(i);
+  }
+
+  for (let i = currentPage; i <= currentPage + 2; i++) {
+    if (i <= totalPages)
     pageNumbers.push(i);
   }
 
@@ -72,9 +89,14 @@ export default function UniversitiesPage() {
         onChange={handleSearch}
       />
       {currentPosts.map((post: University) => (
-        <div className="border-b m-3 p-3 justify-center items-center" key={post.name}>
+        <div
+          className="border-b m-3 p-3 justify-center items-center"
+          key={post.name}
+        >
           <p key={post.name}>
-            <Link href={`${post.web_pages}`} target="_blank">{post.name}</Link>
+            <Link href={`${post.web_pages}`} target="_blank">
+              {post.name}
+            </Link>
           </p>
         </div>
       ))}

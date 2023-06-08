@@ -46,7 +46,7 @@ const PopulationChart = () => {
     },
   };
 
-  return <ReactApexChart options={options} series={series} type="bar"/>;
+  return <><ReactApexChart options={options} series={series} type="bar"/> </>;
 };
 
 export default PopulationChart;
