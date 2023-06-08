@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import { getModifiedUSPopulation } from "@/lib/getUsPopulation";
+import { ApexOptions } from "apexcharts";
 
 const PopulationChart = () => {
   const [series, setSeries] = useState<{ name: string; data: { x: any; y: any }[]; }[]>([]);
@@ -24,7 +25,7 @@ const PopulationChart = () => {
     fetchData();
   }, []);
 
-  const options = {
+  const options: ApexOptions = {
     chart: {
       type: "bar",
     },
