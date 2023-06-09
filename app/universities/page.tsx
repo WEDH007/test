@@ -5,12 +5,15 @@ import getAllUniversities from "@/lib/getAllUniversities";
 import Link from "next/link";
 
 interface University {
+  country: string;
+  alpha_two_code: string;
   name: string;
-  web_pages: string;
+  domains: string[];
+  web_pages: string[];
 }
 
 export default function UniversitiesPage() {
-  const [currentPage, setCurrentPage] = useState<number>(100);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [postsPerPage] = useState<number>(10);
   const [universities, setUniversities] = useState<University[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -71,13 +74,12 @@ export default function UniversitiesPage() {
     if (i >= 1) {
       pageNumbers.push(i);
     }
-    console.log(i);
   }
 
   for (let i = currentPage; i <= currentPage + 2; i++) {
-    if (i <= totalPages)
-    pageNumbers.push(i);
+    if (i <= totalPages) pageNumbers.push(i);
   }
+
 
   return (
     <section>
@@ -88,7 +90,8 @@ export default function UniversitiesPage() {
         value={searchTerm}
         onChange={handleSearch}
       />
-      {currentPosts.map((post: University) => (
+
+      {/* {currentPosts.map((post: University) => (
         <div
           className="border-b m-3 p-3 justify-center items-center"
           key={post.name}
@@ -99,7 +102,21 @@ export default function UniversitiesPage() {
             </Link>
           </p>
         </div>
+      ))} */}
+
+      {currentPosts.map((post: University, index: number) => (
+        <div
+          className="border-b m-3 p-3 justify-center items-center"
+          key={index}
+        >
+          <p key={index}>
+            <Link href={`${post.web_pages}`} target="_blank">
+              {post.name}
+            </Link>
+          </p>
+        </div>
       ))}
+
       {pageNumbers.map((num) => (
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full m-1"
