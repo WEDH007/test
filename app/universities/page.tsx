@@ -126,6 +126,8 @@ export default function UniversitiesPage() {
           {num}
         </button>
       ))}
+
+      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full m-1" onClick={()=>setCurrentPage(1)}>Back to first</button>
     </section>
   );
 }
